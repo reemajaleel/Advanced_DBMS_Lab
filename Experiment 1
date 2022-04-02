@@ -1,0 +1,218 @@
+EXPERIMENT 1:
+
+
+
+
+
+
+1) Create a table EMPLOYEE have the following fields (emp_id, name,city,dob,adhar_no)
+
+
+mysql> create table employee(emp_id int, name varchar(10), city varchar(15), dob date, adhar_no int);
+Query OK, 0 rows affected (0.27 sec)
+mysql> desc employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| emp_id   | int(11)     | YES  |     | NULL    |       |
+| name     | varchar(10) | YES  |     | NULL    |       |
+| city     | varchar(15) | YES  |     | NULL    |       |
+| dob      | date        | YES  |     | NULL    |       |
+| adhar_no | int(11)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+2) Create a table STUDENT have the
+fields(roll_no, name, age, address, gender)and add following constraints on it.
+Roll_no – Primary key
+Name – does not allow null values
+Age- must be in between (0-99), does
+not allow null values
+Gender- default value is ‘m’
+
+
+mysql> create table STUDENT(roll_no int primary key, name varchar(15) not null, age int not null check(0-99), address varchar(50),gender varchar(2) default'm'); 
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> desc STUDENT;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int(11)     | NO   | PRI | NULL    |       |
+| name    | varchar(15) | NO   |     | NULL    |       |
+| age     | int(11)     | NO   |     | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| gender  | varchar(2)  | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+3)  Create a temporary table STUDENT1 of STUDENT relation.
+
+
+mysql> create temporary table STUDENT1 select * from STUDENT;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc STUDENT1;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int(11)     | NO   |     | NULL    |       |
+| name    | varchar(15) | NO   |     | NULL    |       |
+| age     | int(11)     | NO   |     | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| gender  | varchar(2)  | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+4) Create a duplicate table of EMPLOYEE.
+
+
+mysql> create table employee1 select emp_id, name, city, dob, adhar_no from employee;
+Query OK, 0 rows affected (0.24 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee1;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| emp_id   | int(11)     | YES  |     | NULL    |       |
+| name     | varchar(10) | YES  |     | NULL    |       |
+| city     | varchar(15) | YES  |     | NULL    |       |
+| dob      | date        | YES  |     | NULL    |       |
+| adhar_no | int(11)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+5) Create an INVOICE database and having following tables.
+Customer(cust_id, name, address, city, ph_no)
+Product(pid,  pname, price (default 0))
+Invoice_master(inv_id, cust_id(FK), inv_date)
+Invoice_item(inv_id(FK),  pid(FK), quantity)
+
+
+mysql> create database INVOICE;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use INVOICE;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table customer(cust_id int primary key, name varchar(15), address varchar(50), city varchar(10), ph_no int);
+Query OK, 0 rows affected (0.29 sec)
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cust_id | int(11)     | NO   | PRI | NULL    |       |
+| name    | varchar(15) | YES  |     | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| city    | varchar(10) | YES  |     | NULL    |       |
+| ph_no   | int(11)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table product(pid int, pname varchar(15), price decimal default 0);
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> create table product(pid int primary key, pname varchar(15), price decimal default 0);
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> desc product;
++-------+---------------+------+-----+---------+-------+
+| Field | Type          | Null | Key | Default | Extra |
++-------+---------------+------+-----+---------+-------+
+| pid   | int(11)       | NO   | PRI | NULL    |       |
+| pname | varchar(15)   | YES  |     | NULL    |       |
+| price | decimal(10,0) | YES  |     | 0       |       |
++-------+---------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table invoice_master(inv_id int primary key, cust_id int, inv_date date, constraint a1 foreign key(cust_id) references customer(cust_id));
+Query OK, 0 rows affected (0.39 sec)
+
+mysql> desc invoice_master;
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| inv_id   | int(11) | NO   | PRI | NULL    |       |
+| cust_id  | int(11) | YES  | MUL | NULL    |       |
+| inv_date | date    | YES  |     | NULL    |       |
++----------+---------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table invoice_item(inv_id int, pid int,quantity int, constraint b1 foreign key(inv_id) references invoice_master(inv_id), constraint b2 foreign key(pid) references product(pid));
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> desc invoice_item;
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| inv_id   | int(11) | YES  | MUL | NULL    |       |
+| pid      | int(11) | YES  | MUL | NULL    |       |
+| quantity | int(11) | YES  |     | NULL    |       |
++----------+---------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_INVOICE |
++-------------------+
+| customer          |
+| invoice_item      |
+| invoice_master    |
+| product           |
++-------------------+
+4 rows in set (0.00 sec)
+
+
