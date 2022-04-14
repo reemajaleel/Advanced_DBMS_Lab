@@ -213,8 +213,6 @@ mysql> desc person;
 
 
 
-
-
 7) Delete the duplicate table.
 
 
@@ -229,3 +227,4 @@ ERROR 1146 (42S02): Table 'Reema.employee1' doesn't exist
 
 
 
+//VERIFIED
