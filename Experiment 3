@@ -1,4 +1,7 @@
-Experiment 3:
+--------------------------------------------EXPERIMENT 3------------------------------------------------------------
+----------------------------------------DML COMMANDS - INSERT-------------------------------------------------------
+
+PROGRAM 3:
 
 
 
@@ -276,6 +279,18 @@ Query OK, 1 row affected (0.04 sec)
 mysql> insert into invoice_item(inv_id, pid, quantity) values(115, 103, 4);
 Query OK, 1 row affected (0.04 sec)
 
+mysql> insert into invoice_item(inv_id, pid, quantity) values(111, 103, 2);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into invoice_item(inv_id, pid, quantity) values (112, 105, 1);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into invoice_item(inv_id, pid, quantity) values (112, 103, 4);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into invoice_item(inv_id, pid, quantity) values (115, 105, 3);
+Query OK, 1 row affected (0.05 sec)
+
 mysql> select * from invoice_item;
 +--------+------+----------+
 | inv_id | pid  | quantity |
@@ -285,11 +300,14 @@ mysql> select * from invoice_item;
 |    113 |  101 |        1 |
 |    114 |  101 |        2 |
 |    115 |  103 |        4 |
+|    111 |  103 |        2 |
+|    112 |  105 |        1 |
+|    112 |  103 |        4 |
+|    115 |  105 |        3 |
 +--------+------+----------+
-5 rows in set (0.00 sec)
+9 rows in set (0.00 sec)
 
 
 
-//CUSTOMERS CAN PURCHASE MORE THAN ONE PRODUCTS. CHANGE INVOICE-MASTER TABLE
 
 
