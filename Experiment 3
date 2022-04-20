@@ -228,10 +228,10 @@ Query OK, 1 row affected (0.04 sec)
 mysql> insert into invoice_master(inv_id, cust_id, inv_date) values(112, 3, '2022-02-02');
 Query OK, 1 row affected (0.03 sec)
 
-mysql> insert into invoice_master(inv_id, cust_id, inv_date) values(113, 4, '2022-02-10');
+mysql> insert into invoice_master(inv_id, cust_id, inv_date) values(113, 1, '2022-02-10');
 Query OK, 1 row affected (0.05 sec)
 
-mysql> insert into invoice_master(inv_id, cust_id, inv_date) values(114, 5, '2022-03-25');
+mysql> insert into invoice_master(inv_id, cust_id, inv_date) values(114, 1, '2022-03-25');
 Query OK, 1 row affected (0.03 sec)
 
 mysql> insert into invoice_master(inv_id, cust_id, inv_date) values(115, 3, '2022-04-02');
@@ -243,8 +243,8 @@ mysql> select * from invoice_master;
 +--------+---------+------------+
 |    111 |       2 | 2020-04-24 |
 |    112 |       3 | 2022-02-02 |
-|    113 |       4 | 2022-02-10 |
-|    114 |       5 | 2022-03-25 |
+|    113 |       1 | 2022-02-10 |
+|    114 |       1 | 2022-03-25 |
 |    115 |       3 | 2022-04-02 |
 +--------+---------+------------+
 5 rows in set (0.00 sec)
