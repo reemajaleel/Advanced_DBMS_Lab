@@ -1,0 +1,194 @@
+------------------------------------------EXPERIMENT 7---------------------------------------------------------
+-----------------------DML- SELECT QUERY 2 (GROUP BY, AGGREGATE FUNCTIONS)-------------------------------------
+
+
+
+
+
+
+1. List product name, price except soap on price order.
+
+mysql> select * from product;
++-----+-------------+--------+
+| pid | pname       | price  |
++-----+-------------+--------+
+| 101 | Eraser      |  12.24 |
+| 102 | Record book | 132.60 |
+| 103 | Bag         | 183.60 |
+| 104 | Book        |  99.96 |
+| 105 | Pen         |  10.20 |
+| 106 | Soap        |  50.00 |
++-----+-------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select pname, price from product where pname!='Soap' order by price;
++-------------+--------+
+| pname       | price  |
++-------------+--------+
+| Pen         |  10.20 |
+| Eraser      |  12.24 |
+| Book        |  99.96 |
+| Record book | 132.60 |
+| Bag         | 183.60 |
++-------------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+2. Find minimum, maximum and average price of products.
+
+mysql> select * from product;
++-----+-------------+--------+
+| pid | pname       | price  |
++-----+-------------+--------+
+| 101 | Eraser      |  12.24 |
+| 102 | Record book | 132.60 |
+| 103 | Bag         | 183.60 |
+| 104 | Book        |  99.96 |
+| 105 | Pen         |  10.20 |
+| 106 | Soap        |  50.00 |
++-----+-------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select max(price), min(price), avg(price) from product;
++------------+------------+------------+
+| max(price) | min(price) | avg(price) |
++------------+------------+------------+
+|     183.60 |      10.20 |  81.433333 |
++------------+------------+------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+3. Find number of customers in each city.
+
+mysql> select * from customer;
++---------+----------+---------+-----------+-----------+
+| cust_id | name     | address | city      | ph_no     |
++---------+----------+---------+-----------+-----------+
+|       1 | Parvathi | ABC     | Tvm       | 919191919 |
+|       2 | Reema    | WXY     | Kozhikode | 999999992 |
+|       3 | Arun     | VWX     | Ekm       | 999999993 |
+|       4 | Shamil   | PQR     | Kozhikode |      NULL |
+|       5 | Briji    | RST     | Tvm       | 999999995 |
+|       6 | An       | PQRS    | Ekm       | 999999997 |
++---------+----------+---------+-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select city, count(city) from customer group by city;
++-----------+-------------+
+| city      | count(city) |
++-----------+-------------+
+| Ekm       |           2 |
+| Kozhikode |           2 |
+| Tvm       |           2 |
++-----------+-------------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+4. Find number of customers in each city, only include city with more than 3 customers.
+
+mysql> select * from customer;                                                  
++---------+----------+---------+-----------+-----------+
+| cust_id | name     | address | city      | ph_no     |
++---------+----------+---------+-----------+-----------+
+|       1 | Parvathi | ABC     | Tvm       | 919191919 |
+|       2 | Reema    | WXY     | Kozhikode | 999999992 |
+|       3 | Arun     | VWX     | Ekm       | 999999993 |
+|       4 | Shamil   | PQR     | Kozhikode |      NULL |
+|       5 | Briji    | RST     | Tvm       | 999999995 |
+|       6 | An       | PQRS    | Ekm       | 999999997 |
+|       7 | Anu      | ABCD    | Kozhikode | 999999998 |
+|       8 | Mazin    | WXYZ    | Kozhikode | 999999990 |
++---------+----------+---------+-----------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select city, count(city) from customer group by city having count(city)>=3;
++-----------+-------------+
+| city      | count(city) |
++-----------+-------------+
+| Kozhikode |           4 |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+5. Show data as displayed ‘who, where’ Eg: ‘customer1 lives in ekm’.
+
+mysql> select * from customer;                                                  
++---------+----------+---------+-----------+-----------+
+| cust_id | name     | address | city      | ph_no     |
++---------+----------+---------+-----------+-----------+
+|       1 | Parvathi | ABC     | Tvm       | 919191919 |
+|       2 | Reema    | WXY     | Kozhikode | 999999992 |
+|       3 | Arun     | VWX     | Ekm       | 999999993 |
+|       4 | Shamil   | PQR     | Kozhikode |      NULL |
+|       5 | Briji    | RST     | Tvm       | 999999995 |
+|       6 | An       | PQRS    | Ekm       | 999999997 |
+|       7 | Anu      | ABCD    | Kozhikode | 999999998 |
+|       8 | Mazin    | WXYZ    | Kozhikode | 999999990 |
++---------+----------+---------+-----------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select concat(name, " lives in ", city) as customer_info from customer;
++---------------------------+
+| customer_info             |
++---------------------------+
+| Parvathi lives in Tvm     |
+| Reema lives in Kozhikode  |
+| Arun lives in Ekm         |
+| Shamil lives in Kozhikode |
+| Briji lives in Tvm        |
+| An lives in Ekm           |
+| Anu lives in Kozhikode    |
+| Mazin lives in Kozhikode  |
++---------------------------+
+8 rows in set (0.00 sec)
+
+
+
+
+
+
