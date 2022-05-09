@@ -506,5 +506,5 @@ mysql> select name from customer where name like 'a__%';
 
 
 
-
+// VERIFIED
 
