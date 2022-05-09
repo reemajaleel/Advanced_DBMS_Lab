@@ -145,7 +145,7 @@ mysql> select * from customer;
 +---------+----------+---------+-----------+-----------+
 5 rows in set (0.00 sec)
 
-mysql> update customer set address='ABC', city='Tvm', ph_no=919191919 where cust_id=1;
+mysql> update customer set address='ABC', city='Tvm', ph_no=919191919 where cust_id=1; //MENTION CUSTOMER NAME
 Query OK, 1 row affected (0.03 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
@@ -212,5 +212,5 @@ mysql> select * from invoice_item;
 
 
 
-
+//VERIFIED
 
