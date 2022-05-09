@@ -190,5 +190,5 @@ mysql> select concat(name, " lives in ", city) as customer_info from customer;
 
 
 
-
+//VERIFIED
 
