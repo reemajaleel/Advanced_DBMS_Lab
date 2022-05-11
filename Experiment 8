@@ -385,7 +385,7 @@ mysql> select * from invoice_item;
 +--------+------+----------+
 5 rows in set (0.00 sec)
 
-mysql> select name from customer where cust_id in(select cust_id from invoice_master where inv_id in(select inv_id from invoice_item group by inv_id having count(inv_id)>=2));
+mysql> select DISTINCT name from customer where cust_id in(select cust_id from invoice_master where inv_id in(select inv_id from invoice_item group by inv_id having count(inv_id)>=2));
 +----------+
 | name     |
 +----------+
@@ -397,4 +397,4 @@ mysql> select name from customer where cust_id in(select cust_id from invoice_ma
 
 
 
-
+//VERIFIED
