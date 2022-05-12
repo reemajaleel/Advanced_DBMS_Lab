@@ -164,9 +164,6 @@ mysql> desc customer;
 +---------+-------------+------+-----+---------+-------+
 5 rows in set (0.00 sec)
 
-mysql> create table product(pid int, pname varchar(15), price decimal(10,2) default 0);
-Query OK, 0 rows affected (0.23 sec)
-
 mysql> create table product(pid int primary key, pname varchar(15), price decimal default 0);
 Query OK, 0 rows affected (0.34 sec)
 
