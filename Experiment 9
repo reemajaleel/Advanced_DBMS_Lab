@@ -275,4 +275,4 @@ mysql> select customer.name, product.pname, product.price, invoice_master.inv_id
 
 
 
-
+//VERIFIED
