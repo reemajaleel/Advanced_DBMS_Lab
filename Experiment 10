@@ -1,0 +1,157 @@
+------------------------------------------EXPERIMENT 10-----------------------------------------------------------
+----------------------------------------------VIEWS---------------------------------------------------------------
+
+
+
+
+
+
+1.  Create a view for customers who have purchased products.
+
+mysql> select * from customer;                                                  
++---------+----------+---------+-----------+-----------+
+| cust_id | name     | address | city      | ph_no     |
++---------+----------+---------+-----------+-----------+
+|       1 | Parvathi | ABC     | Tvm       | 919191919 |
+|       2 | Reema    | WXY     | Kozhikode | 999999992 |
+|       3 | Arun     | VWX     | Ekm       | 999999993 |
+|       4 | Shamil   | PQR     | Kozhikode |      NULL |
+|       5 | Briji    | RST     | Tvm       | 999999995 |
+|       6 | An       | PQRS    | Ekm       | 999999997 |
+|       7 | Anu      | ABCD    | Kozhikode | 999999998 |
+|       8 | Mazin    | WXYZ    | Kozhikode | 999999990 |
++---------+----------+---------+-----------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from product;
++-----+-------------+--------+
+| pid | pname       | price  |
++-----+-------------+--------+
+| 101 | Eraser      |  12.24 |
+| 102 | Record book | 132.60 |
+| 103 | Bag         | 183.60 |
+| 104 | Book        |  99.96 |
+| 105 | Pen         |  10.20 |
+| 106 | Soap        |  50.00 |
++-----+-------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    112 |       3 | 2022-02-02 |
+|    113 |       1 | 2022-02-10 |
+|    114 |       1 | 2022-04-25 |
++--------+---------+------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    114 |  102 |        2 |
+|    114 |  101 |        1 |
+|    114 |  102 |        2 |
+|    112 |  103 |        4 |
+|    113 |  104 |        6 |
++--------+------+----------+
+5 rows in set (0.00 sec)
+
+mysql> create view v1 as select customer.* from customer inner join invoice_master on customer.cust_id=invoice_master.cust_id;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from v1;
++---------+----------+---------+------+-----------+
+| cust_id | name     | address | city | ph_no     |
++---------+----------+---------+------+-----------+
+|       1 | Parvathi | ABC     | Tvm  | 919191919 |
+|       1 | Parvathi | ABC     | Tvm  | 919191919 |
+|       3 | Arun     | VWX     | Ekm  | 999999993 |
++---------+----------+---------+------+-----------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+2.  Create a view for invoice products[name, inv_id, product_id, quantity]
+
+mysql> select * from customer;                                                  
++---------+----------+---------+-----------+-----------+
+| cust_id | name     | address | city      | ph_no     |
++---------+----------+---------+-----------+-----------+
+|       1 | Parvathi | ABC     | Tvm       | 919191919 |
+|       2 | Reema    | WXY     | Kozhikode | 999999992 |
+|       3 | Arun     | VWX     | Ekm       | 999999993 |
+|       4 | Shamil   | PQR     | Kozhikode |      NULL |
+|       5 | Briji    | RST     | Tvm       | 999999995 |
+|       6 | An       | PQRS    | Ekm       | 999999997 |
+|       7 | Anu      | ABCD    | Kozhikode | 999999998 |
+|       8 | Mazin    | WXYZ    | Kozhikode | 999999990 |
++---------+----------+---------+-----------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from product;
++-----+-------------+--------+
+| pid | pname       | price  |
++-----+-------------+--------+
+| 101 | Eraser      |  12.24 |
+| 102 | Record book | 132.60 |
+| 103 | Bag         | 183.60 |
+| 104 | Book        |  99.96 |
+| 105 | Pen         |  10.20 |
+| 106 | Soap        |  50.00 |
++-----+-------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    112 |       3 | 2022-02-02 |
+|    113 |       1 | 2022-02-10 |
+|    114 |       1 | 2022-04-25 |
++--------+---------+------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    114 |  102 |        2 |
+|    114 |  101 |        1 |
+|    114 |  102 |        2 |
+|    112 |  103 |        4 |
+|    113 |  104 |        6 |
++--------+------+----------+
+5 rows in set (0.00 sec)
+
+mysql> create view v2 as select customer.name, invoice_master.inv_id, product.pid, invoice_item.quantity from customer inner join invoice_master on customer.cust_id=invoice_master.cust_id inner join invoice_item on invoice_master.inv_id=invoice_item.inv_id inner join product on invoice_item.pid=product.pid;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from v2;
++----------+--------+-----+----------+
+| name     | inv_id | pid | quantity |
++----------+--------+-----+----------+
+| Parvathi |    114 | 102 |        2 |
+| Parvathi |    114 | 101 |        1 |
+| Parvathi |    114 | 102 |        2 |
+| Arun     |    112 | 103 |        4 |
+| Parvathi |    113 | 104 |        6 |
++----------+--------+-----+----------+
+5 rows in set (0.03 sec)
+
+
+
+
+
+
