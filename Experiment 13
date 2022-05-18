@@ -1,0 +1,181 @@
+------------------------------------------EXPERIMENT 13-----------------------------------------------------------
+------------------------------------------TCL COMMANDS------------------------------------------------------------
+
+
+
+
+
+
+1. Commit
+2. Rollback
+3. Savepoint
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+
+
+mysql> set autocommit = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create table class(id int, name varchar(10));
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> desc class;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | YES  |     | NULL    |       |
+| name  | varchar(10) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into class values(1, 'Shamil');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into class values(2, 'Anu');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into class values(3, 'Reema');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into class values(4, 'Ambili');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into class values(5, 'Briji');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from class;
++------+--------+
+| id   | name   |
++------+--------+
+|    1 | Shamil |
+|    2 | Anu    |
+|    3 | Reema  |
+|    4 | Ambili |
+|    5 | Briji  |
++------+--------+
+5 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from class;
++------+--------+
+| id   | name   |
++------+--------+
+|    1 | Shamil |
+|    2 | Anu    |
+|    3 | Reema  |
+|    4 | Ambili |
+|    5 | Briji  |
++------+--------+
+5 rows in set (0.00 sec)
+
+mysql> savepoint a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into class values(6, 'Sanan');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into class values(7, 'Aswin');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into class values(8, 'Fathima');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into class values(9, 'Shamna');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from class;
++------+---------+
+| id   | name    |
++------+---------+
+|    1 | Shamil  |
+|    2 | Anu     |
+|    3 | Reema   |
+|    4 | Ambili  |
+|    5 | Briji   |
+|    6 | Sanan   |
+|    7 | Aswin   |
+|    8 | Fathima |
+|    9 | Shamna  |
++------+---------+
+9 rows in set (0.00 sec)
+
+mysql> savepoint b;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into class values(10, 'Parvathi');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into class values(11, 'Anjusha');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from class;
++------+----------+
+| id   | name     |
++------+----------+
+|    1 | Shamil   |
+|    2 | Anu      |
+|    3 | Reema    |
+|    4 | Ambili   |
+|    5 | Briji    |
+|    6 | Sanan    |
+|    7 | Aswin    |
+|    8 | Fathima  |
+|    9 | Shamna   |
+|   10 | Parvathi |
+|   11 | Anjusha  |
++------+----------+
+11 rows in set (0.00 sec)
+
+mysql> rollback to b;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from class;
++------+---------+
+| id   | name    |
++------+---------+
+|    1 | Shamil  |
+|    2 | Anu     |
+|    3 | Reema   |
+|    4 | Ambili  |
+|    5 | Briji   |
+|    6 | Sanan   |
+|    7 | Aswin   |
+|    8 | Fathima |
+|    9 | Shamna  |
++------+---------+
+9 rows in set (0.00 sec)
+
+mysql> rollback to a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from class;
++------+--------+
+| id   | name   |
++------+--------+
+|    1 | Shamil |
+|    2 | Anu    |
+|    3 | Reema  |
+|    4 | Ambili |
+|    5 | Briji  |
++------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
