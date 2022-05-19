@@ -59,7 +59,7 @@ mysql> desc product;
 +-------+--------------+------+-----+---------+-------+
 3 rows in set (0.00 sec)
 
-mysql> grant insert, select on customer to usera@'localhost';
+mysql> grant insert, select on customer to usera@'localhost'; //INVOICE.CUSTOMER
 Query OK, 0 rows affected (0.00 sec)
 
 mysql> show grants for 'usera'@'localhost';
@@ -71,7 +71,7 @@ mysql> show grants for 'usera'@'localhost';
 +-------------------------------------------------------------------+
 2 rows in set (0.00 sec)
 
-mysql> grant update, delete on *.* to userb@'localhost';
+mysql> grant update, delete on *.* to userb@'localhost'; INVOICE.*
 Query OK, 0 rows affected (0.03 sec)
 
 mysql> show grants for 'userb'@'localhost';
@@ -113,4 +113,4 @@ mysql> show grants for 'userb'@'localhost';
 
 
 
-
+//VERIFIED-CHECK CORRECTION
