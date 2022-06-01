@@ -1,0 +1,178 @@
+-----------------------------------------EXPERIMENT 14------------------------------------------------------------
+-------------------------------PL/SQL PROGRAMS - STORED PROCEDURES------------------------------------------------
+
+
+
+
+
+
+1.   Create a procedure to display all tables in the invoice database.
+
+mysql> delimiter $$
+mysql> create procedure invoicetables()
+    -> begin
+    -> select * from customer;
+    -> select * from product;
+    -> select * from invoice_master;
+    -> select * from invoice_item;
+    -> end $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call invoicetables();
++---------+----------+---------+-----------+-----------+
+| cust_id | name     | address | city      | ph_no     |
++---------+----------+---------+-----------+-----------+
+|       1 | Parvathi | ABC     | Tvm       | 919191919 |
+|       2 | Reema    | WXY     | Kozhikode | 999999992 |
+|       3 | Arun     | VWX     | Ekm       | 999999993 |
+|       4 | Shamil   | PQR     | Kozhikode |      NULL |
+|       5 | Briji    | RST     | Tvm       | 999999995 |
+|       6 | An       | PQRS    | Ekm       | 999999997 |
+|       7 | Anu      | ABCD    | Kozhikode | 999999998 |
+|       8 | Mazin    | WXYZ    | Kozhikode | 999999990 |
++---------+----------+---------+-----------+-----------+
+8 rows in set (0.00 sec)
+
++-----+-------------+--------+
+| pid | pname       | price  |
++-----+-------------+--------+
+| 101 | Eraser      |  17.24 |
+| 102 | Record book | 137.60 |
+| 103 | Bag         | 188.60 |
+| 104 | Book        | 104.96 |
+| 105 | Pen         |  15.20 |
+| 106 | Soap        |  55.00 |
++-----+-------------+--------+
+6 rows in set (0.00 sec)
+
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    112 |       3 | 2022-02-02 |
+|    113 |       1 | 2022-02-10 |
+|    114 |       1 | 2022-04-25 |
++--------+---------+------------+
+3 rows in set (0.00 sec)
+
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    114 |  102 |        2 |
+|    114 |  101 |        1 |
+|    114 |  102 |        2 |
+|    112 |  103 |        4 |
+|    113 |  104 |        6 |
++--------+------+----------+
+5 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+-------------------------------------------------------------------------------------------------------------------
+
+2.   Create a procedure to find greatest of 3 numbers.
+
+mysql> delimiter $$
+mysql> create procedure greatestnumber()
+    -> begin
+    -> declare a,b,c int;
+    -> set a=2;
+    -> set b=4;
+    -> set c=1;
+    -> if a>b and a>c then
+    -> select a as 'greatestnumber';
+    -> else if b>a and b>c then
+    -> select b as 'greatestnumber';
+    -> else
+    -> select c as 'greatestnumber';
+    -> end if;
+    -> end if;
+    -> end $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call greatestnumber();
++----------------+
+| greatestnumber |
++----------------+
+|              4 |
++----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+-------------------------------------------------------------------------------------------------------------------
+
+3.   Create a procedure to display invoice details of a particular customer.
+
+mysql> select * from customer;
++---------+----------+---------+-----------+-----------+
+| cust_id | name     | address | city      | ph_no     |
++---------+----------+---------+-----------+-----------+
+|       1 | Parvathi | ABC     | Tvm       | 919191919 |
+|       2 | Reema    | WXY     | Kozhikode | 999999992 |
+|       3 | Arun     | VWX     | Ekm       | 999999993 |
+|       4 | Shamil   | PQR     | Kozhikode |      NULL |
+|       5 | Briji    | RST     | Tvm       | 999999995 |
+|       6 | An       | PQRS    | Ekm       | 999999997 |
+|       7 | Anu      | ABCD    | Kozhikode | 999999998 |
+|       8 | Mazin    | WXYZ    | Kozhikode | 999999990 |
++---------+----------+---------+-----------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from product;
++-----+-------------+--------+
+| pid | pname       | price  |
++-----+-------------+--------+
+| 101 | Eraser      |  17.24 |
+| 102 | Record book | 137.60 |
+| 103 | Bag         | 188.60 |
+| 104 | Book        | 104.96 |
+| 105 | Pen         |  15.20 |
+| 106 | Soap        |  55.00 |
++-----+-------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    112 |       3 | 2022-02-02 |
+|    113 |       1 | 2022-02-10 |
+|    114 |       1 | 2022-04-25 |
++--------+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    114 |  102 |        2 |
+|    114 |  101 |        1 |
+|    114 |  102 |        2 |
+|    112 |  103 |        4 |
+|    113 |  104 |        6 |
++--------+------+----------+
+5 rows in set (0.00 sec)
+
+mysql>  delimiter $$
+mysql> create procedure invoicedetails()
+    -> begin
+    -> select customer.cust_id, customer.name, product.pname, invoice_item.quantity from customer natural join product natural join invoice_item natural join invoice_master where customer.name='Arun';
+    -> end $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call invoicedetails();
++---------+------+-------+----------+
+| cust_id | name | pname | quantity |
++---------+------+-------+----------+
+|       3 | Arun | Bag   |        4 |
++---------+------+-------+----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
