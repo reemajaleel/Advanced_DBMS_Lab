@@ -40,4 +40,4 @@ mysql> select pname, price, price_range(price) from product order by price;
 
 
 
-
+//VERIFIED
