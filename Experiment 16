@@ -1,0 +1,100 @@
+-----------------------------------------EXPERIMENT 16-----------------------------------------------------------
+----------------------------------PL/SQL PROGRAMS – TRIGGERS-----------------------------------------------------
+
+
+
+
+1.   Create a trigger to handle updates to the customer table.
+
+mysql> delimiter //
+mysql> create trigger backup
+    -> before update
+    -> on customer
+    -> for each row 
+    -> begin
+    -> insert into customer_backup 
+    -> values(old.cust_id,old.name,old.address,old.city,old.ph_no);
+    -> end //
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> delimiter ;
+mysql> create table customer_backup(cust_id int,name varchar(15),address varchar(50),city varchar(10),ph_no int);
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> select * from customer;
++---------+----------+---------+-----------+-----------+
+| cust_id | name     | address | city      | ph_no     |
++---------+----------+---------+-----------+-----------+
+|       1 | Parvathi | ABC     | Tvm       | 919191919 |
+|       2 | Reema    | WXY     | Kozhikode | 999999992 |
+|       3 | Arun     | VWX     | Ekm       | 999999993 |
+|       4 | Shamil   | PQR     | Kozhikode |      NULL |
+|       5 | Briji    | RST     | Tvm       | 999999995 |
+|       6 | An       | PQRS    | Ekm       | 999999997 |
+|       7 | Anu      | ABCD    | Kozhikode | 999999998 |
+|       8 | Mazin    | WXYZ    | Kozhikode | 999999990 |
++---------+----------+---------+-----------+-----------+
+8 rows in set (0.03 sec)
+
+mysql> update customer set name = 'Anju' where cust_id = 6;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer_backup;
++---------+------+---------+------+-----------+
+| cust_id | name | address | city | ph_no     |
++---------+------+---------+------+-----------+
+|       6 | An   | PQRS    | Ekm  | 999999997 |
++---------+------+---------+------+-----------+
+1 row in set (0.00 sec)
+
+-------------------------------------------------------------------------------------------------------------------
+
+2.   Create a trigger to handle inserts to the product relation ( if price < 5 the set price to 10 ).
+
+mysql> select * from product;
++-----+-------------+--------+
+| pid | pname       | price  |
++-----+-------------+--------+
+| 101 | Eraser      |  17.24 |
+| 102 | Record book | 137.60 |
+| 103 | Bag         | 188.60 |
+| 104 | Book        | 104.96 |
+| 105 | Pen         |  15.20 |
+| 106 | Soap        |  55.00 |
++-----+-------------+--------+
+6 rows in set (0.03 sec)
+
+mysql> delimiter //
+mysql> create trigger product_price
+    -> before insert
+    -> on product
+    -> for each row 
+    -> begin
+    -> if new.price < 5 then
+    -> set new.price=10;
+    -> end if;
+    -> end //
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> delimiter ;
+mysql> insert into product values(107,'Pencil',3);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from product;
++-----+-------------+--------+
+| pid | pname       | price  |
++-----+-------------+--------+
+| 101 | Eraser      |  17.24 |
+| 102 | Record book | 137.60 |
+| 103 | Bag         | 188.60 |
+| 104 | Book        | 104.96 |
+| 105 | Pen         |  15.20 |
+| 106 | Soap        |  55.00 |
+| 107 | Pencil      |  10.00 |
++-----+-------------+--------+
+7 rows in set (0.00 sec)
+
+
+
+
